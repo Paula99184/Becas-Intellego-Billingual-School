@@ -1,119 +1,466 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universidades Destacadas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .university-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-        }
-        .university-logo {
-            width: 100px;
-            height: 100px;
-            margin-right: 20px;
-            border-radius: 5px;
-            object-fit: cover;
-        }
-        .university-info {
-            flex-grow: 1;
-        }
-        .university-info h2 {
-            margin-top: 0;
-            color: #0056b3;
-        }
-        .university-info p {
-            line-height: 1.6;
-        }
-        .university-info a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .university-info a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Becas Internacionales – Intellego</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.320.0"></script>
+  
+  <style>
+    /* Configuración de Tailwind para incluir fuentes */
+    :root {
+      --font-inter: 'Inter', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+    }
+    body {
+      font-family: var(--font-inter);
+      background-color: #f8faff; /* Un fondo muy claro */
+    }
+
+    /* Estilos personalizados para el Hero Section */
+    .bg-hero {
+      background: linear-gradient(135deg, #2e4c85 0%, #1a3a60 100%); /* Degradado de azul profundo */
+      position: relative;
+      overflow: hidden;
+    }
+    /* Pseudo-elemento para el degradado animado de fondo */
+    .bg-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      animation: heroGradientShift 15s ease-in-out infinite alternate;
+      transform: scale(1.5);
+    }
+
+    @keyframes heroGradientShift {
+      from { transform: translateX(-20%) translateY(-20%) scale(1.5) rotate(0deg); }
+      to { transform: translateX(20%) translateY(20%) scale(1.5) rotate(5deg); }
+    }
+
+    /* Clases para animaciones al hacer scroll */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform; /* Optimización de rendimiento */
+    }
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Retraso para las tarjetas para un efecto escalonado */
+    .card-grid .reveal-item:nth-child(1) { transition-delay: 0s; }
+    .card-grid .reveal-item:nth-child(2) { transition-delay: 0.1s; }
+    .card-grid .reveal-item:nth-child(3) { transition-delay: 0.2s; }
+    .card-grid .reveal-item:nth-child(4) { transition-delay: 0.3s; }
+    .card-grid .reveal-item:nth-child(5) { transition-delay: 0.4s; }
+    .card-grid .reveal-item:nth-child(6) { transition-delay: 0.5s; }
+    .card-grid .reveal-item:nth-child(7) { transition-delay: 0.6s; }
+    .card-grid .reveal-item:nth-child(8) { transition-delay: 0.7s; }
+
+    /* Estilos para botones */
+    .btn-primary-custom {
+      @apply bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105;
+    }
+    .btn-warning-custom {
+      @apply bg-yellow-500 text-blue-900 font-bold py-3 px-8 rounded-full shadow-xl hover:bg-yellow-400 transition-all duration-300 ease-in-out transform hover:scale-105;
+    }
+    .btn-secondary-custom {
+      @apply bg-gray-200 text-gray-800 font-semibold py-2 px-5 rounded-md hover:bg-gray-300 transition-colors duration-300 ease-in-out;
+    }
+
+    /* Estilos para tarjetas */
+    .card-custom {
+      @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out;
+    }
+    .card-hover-scale:hover {
+      transform: scale(1.02);
+    }
+
+    /* Iconos (Lucide) - solo si los usas directamente en HTML */
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+  </style>
 </head>
-<body>
+<body class="text-gray-800">
 
-    <h1>Lista de Universidades Destacadas</h1>
-
-    <div class="university-container">
-        <div class="university-info">
-            <h2>Universidad de Oxford</h2>
-            <p>La Universidad de Oxford es una universidad de investigación colegiada ubicada en Oxford, Inglaterra. Siendo la universidad más antigua del mundo angloparlante, cuenta con un legado de enseñanza y estudio que data de al menos 1096.</p>
-            <p><a href="https://www.ox.ac.uk/">Sitio web oficial</a></p>
-        </div>
+  <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex flex-col lg:flex-row justify-between items-center">
+      <a class="text-2xl font-bold flex items-center mb-4 lg:mb-0" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon lucide lucide-graduation-cap mr-2"><path d="M21.43 20.3V5.71a1.28 1.28 0 0 0-.79-1.11l-9-4.29a1.28 1.28 0 0 0-1.12 0l-9 4.29A1.28 1.28 0 0 0 2.57 5.71v14.59a2 2 0 0 0 2 2h15.86a2 2 0 0 0 2-2Z"/><path d="m2.57 5.71 8.76 4.19a1.28 1.28 0 0 0 1.12 0l8.76-4.19"/><path d="m10.5 4.5 1.5 7.5 1.5-7.5"/></svg>
+        Intellego Becas
+      </a>
+      <div class="flex-grow flex justify-center lg:justify-end">
+        <ul class="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-8 text-lg font-medium">
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#inicio">Inicio</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#becas">Becas</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#experiencias">Experiencias</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#universidades">Universidades</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#perfil">Crear Perfil</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <div class="university-container">
-        <div class="university-info">
-            <h2>Universidad de Cambridge</h2>
-            <p>La Universidad de Cambridge es una universidad de investigación colegiada en Cambridge, Reino Unido. Fundada en 1209 y concedida una carta real por el Rey Enrique III en 1231, es la segunda universidad más antigua del mundo angloparlante.</p>
-            <p><a href="https://www.cam.ac.uk/">Sitio web oficial</a></p>
-        </div>
+  <header class="bg-hero text-white text-center py-20 md:py-32 relative reveal-item" id="inicio">
+    <div class="container mx-auto px-4 z-10 relative">
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-md">
+        ¡Tu Futuro Académico Internacional te Espera!
+      </h1>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-8 opacity-90">
+        Descubre las oportunidades de becas internacionales que el Colegio Intellego Bilingual School te ayuda a alcanzar en las mejores universidades del mundo.
+      </p>
+      <a href="#becas" class="btn-warning-custom">Explorar Becas Internacionales</a>
     </div>
+  </header>
 
-    <div class="university-container">
-        <div class="university-info">
-            <h2>Universidad de Harvard</h2>
-            <p>La Universidad de Harvard es una universidad privada de investigación de la Ivy League en Cambridge, Massachusetts. Fundada en 1636, es la institución de educación superior más antigua de los Estados Unidos y es ampliamente considerada una de las universidades más prestigiosas del mundo.</p>
-            <p><a href="https://www.harvard.edu/">Sitio web oficial</a></p>
+  <section id="becas" class="py-16 md:py-24 bg-gray-50 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Tipos de Becas Internacionales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 card-grid">
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text text-blue-600 mb-4"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 =1 3-3h6z"/><path d="M10 12H7"/><path d="M13 16H7"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Becas Académicas</h5>
+            <p class="text-gray-600 text-sm">Estas becas se otorgan a estudiantes con un **expediente académico sobresaliente** y un rendimiento excepcional en sus estudios. Suelen cubrir total o parcialmente la matrícula, y en algunos casos, gastos de manutención y alojamiento. Son ideales para quienes buscan programas de grado o posgrado en universidades de prestigio en el extranjero, como Harvard, Stanford o la Universidad de Oxford. Requieren un alto promedio, resultados destacados en exámenes estandarizados (SAT, ACT, GRE, GMAT) y, a menudo, ensayos personales convincentes y cartas de recomendación.</p>
+          </div>
         </div>
-    </div>
-
-    <div class="university-container">
-        <div class="university-info">
-            <h2>University College London (UCL)</h2>
-            <p>UCL es una comunidad global diversa de académicos, estudiantes, enlaces con la industria, socios externos y exalumnos de clase mundial. Fundada en 1826 en el corazón de Londres, es la principal universidad multidisciplinaria de Londres, consistentemente clasificada entre las 10 mejores universidades del mundo.</p>
-            <p><a href="https://www.ucl.ac.uk/about/">Sitio web oficial</a></p>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell text-green-600 mb-4"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.69 11.31a2 2 0 1 0 2.83-2.83L19 6 6 19l1.41 1.41a2 2 0 1 0 2.83-2.83L11 16z"/><path d="m2.1 21.7 4.3-4.3"/><path d="m17.6 6.4 3.1-3.1"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Becas Deportivas</h5>
+            <p class="text-gray-600 text-sm">Dirigidas a **atletas talentosos** que demuestran un alto nivel de rendimiento en un deporte específico y cumplen con los requisitos académicos de la universidad. Estas becas, comunes en EE. UU., cubren los costos educativos a cambio de la participación en los equipos deportivos universitarios. Se requiere un historial competitivo sólido, videos de habilidades deportivas y el cumplimiento de las normativas de elegibilidad de las ligas universitarias (NCAA, NAIA).</p>
+          </div>
         </div>
-    </div>
-
-    <div class="university-container">
-        <div class="university-info">
-            <h2>ETH Zurich</h2>
-            <p>ETH Zurich (Instituto Federal Suizo de Tecnología en Zúrich) es una de las principales universidades del mundo en ciencia y tecnología, conocida por su investigación e innovación de vanguardia. Fue fundada en 1854 con la misión de educar a ingenieros y científicos.</p>
-            <p><a href="https://ethz.ch/en.html">Sitio web oficial</a></p>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award text-purple-600 mb-4"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Becas por Mérito y Liderazgo</h5>
+            <p class="text-gray-600 text-sm">Estas becas reconocen no solo el rendimiento académico, sino también las **habilidades de liderazgo, el servicio comunitario, el talento artístico o el impacto social** del estudiante. Son ideales para aquellos que han participado activamente en proyectos extracurriculares, voluntariado, clubes estudiantiles o iniciativas con impacto. Se valoran cualidades como la proactividad, la innovación y la capacidad de influir positivamente en su entorno.</p>
+          </div>
         </div>
-    </div>
-
-    <div class="university-container">
-        <div class="university-info">
-            <h2>National University of Singapore (NUS)</h2>
-            <p>La Universidad Nacional de Singapur (NUS) es una universidad global líder centrada en Asia. Ofrece un enfoque global de la educación y la investigación, con un enfoque en perspectivas y experiencia asiáticas. NUS cuenta con 14 facultades y escuelas en tres campus.</p>
-            <p><a href="https://www.nus.edu.sg/">Sitio web oficial</a></p>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flask-conical text-red-600 mb-4"><path d="M10 2v7.31c0 .9.7 1.69 1.6 1.69h.8c.9 0 1.6-.79 1.6-1.69V2"/><path d="M14.4 9.35C20.3 11.13 22 13.05 22 15a7 7 0 1 1-14 0c0-1.95 1.7-3.87 7.6-5.65Z"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Becas de Investigación y Postgrado</h5>
+            <p class="text-gray-600 text-sm">Destinadas a estudiantes de posgrado (maestría o doctorado) con **intereses y experiencia demostrada en investigación**. Estas becas suelen estar vinculadas a proyectos específicos de las universidades o centros de investigación y cubren la matrícula, estipendios para vivir y, a veces, costos de viaje y materiales. Requieren propuestas de investigación sólidas, publicaciones (si aplica) y cartas de recomendación de mentores académicos.</p>
+          </div>
         </div>
+      </div>
     </div>
+  </section>
 
-    <div class="university-container">
-        <div class="university-info">
-            <h2>University of Tokyo</h2>
-            <p>La Universidad de Tokio (UTokyo) fue establecida en 1877 como la primera universidad nacional de Japón. Como universidad de investigación líder, UTokyo ofrece cursos en prácticamente todas las disciplinas académicas y lleva a cabo investigaciones en todo el espectro de la actividad académica.</p>
-            <p><a href="https://www.u-tokyo.ac.jp/en/">Sitio web oficial</a></p>
+  <section id="experiencias" class="py-16 md:py-24 bg-blue-100 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Historias de Éxito: Nuestros Becarios Internacionales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 card-grid">
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 card-hover-scale">
+            <img src="https://placehold.co/100x100/A7D9FF/000000?text=Ana" alt="Foto de Ana García" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+            <h5 class="text-xl font-semibold mb-2 text-blue-700 text-center">Ana García</h5>
+            <p class="text-gray-700 text-center text-sm italic mb-3">Beca Académica - Universidad de Toronto, Canadá</p>
+            <p class="text-gray-600 text-sm">"Gracias a la orientación de Intellego, obtuve una beca completa para estudiar Ingeniería en Software en Canadá. Fue un proceso exigente, pero el apoyo en la preparación de mis ensayos y la elección de universidades fue clave. ¡Ahora estoy viviendo mi sueño y aprendiendo de los mejores!"</p>
+          </div>
         </div>
-    </div>
-
-    <div class="university-container">
-        <div class="university-info">
-            <h2>Peking University</h2>
-            <p>La Universidad de Pekín (PKU) es una universidad pública en Pekín, China, afiliada y financiada por el Ministerio de Educación de China. Es una universidad clave integral y nacional, conocida por su excelencia en la enseñanza y la investigación en diversas ramas del aprendizaje.</p>
-            <p><a href="http://english.pku.edu.cn/">Sitio web oficial</a></p>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 card-hover-scale">
+            <img src="https://placehold.co/100x100/A7D9FF/000000?text=Carlos" alt="Foto de Carlos López" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+            <h5 class="text-xl font-semibold mb-2 text-blue-700 text-center">Carlos López</h5>
+            <p class="text-gray-700 text-center text-sm italic mb-3">Beca Deportiva (Fútbol) - University of Texas, EE. UU.</p>
+            <p class="text-gray-600 text-sm">"Siempre soñé con jugar fútbol profesional mientras estudiaba. Intellego me conectó con entrenadores universitarios en Estados Unidos. Conseguí una beca deportiva que cubre gran parte de mis estudios. La vida como estudiante-atleta es demandante, ¡pero la experiencia cultural y académica es inigualable!"</p>
+          </div>
         </div>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 card-hover-scale">
+            <img src="https://placehold.co/100x100/A7D9FF/000000?text=Sofía" alt="Foto de Sofía Ramírez" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+            <h5 class="text-xl font-semibold mb-2 text-blue-700 text-center">Sofía Ramírez</h5>
+            <p class="text-gray-700 text-center text-sm italic mb-3">Beca de Liderazgo - University of Amsterdam, Países Bajos</p>
+            <p class="text-gray-600 text-sm">"Mi pasión por el impacto social me llevó a buscar becas por mérito. Gracias a Intellego, pude resaltar mis proyectos de voluntariado y obtener una beca para estudiar Ciencias Políticas en Ámsterdam. Es increíble cómo se valora el liderazgo y la iniciativa aquí. ¡Una experiencia que ha expandido mi visión del mundo!"</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
+
+  <section id="universidades" class="bg-blue-50 py-16 md:py-24 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Universidades Aliadas y con Oportunidades Globales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 card-grid">
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=University+of+Toronto" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=U+of+T+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="University of Toronto Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">University of Toronto</h5>
+              <p class="text-gray-600 mb-4">Ubicada en Canadá, es una de las universidades líderes en investigación a nivel mundial, ofreciendo programas académicos de alta calidad en diversas disciplinas y una vibrante vida estudiantil multicultural.</p>
+              <a href="https://www.utoronto.ca/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=King's+College+London" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=King\'s+College+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="King's College London Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">King's College London</h5>
+              <p class="text-gray-600 mb-4">Situada en el corazón de Londres, Reino Unido, es una de las universidades más antiguas y prestigiosas del mundo, reconocida por su excelencia en investigación y enseñanza.</p>
+              <a href="https://www.kcl.ac.uk/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=University+of+Melbourne" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=U+Melbourne+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="University of Melbourne Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">University of Melbourne</h5>
+              <p class="text-gray-600 mb-4">La universidad líder de Australia, conocida por su vibrante cultura investigadora y su enfoque en la excelencia académica, atrayendo a estudiantes de todo el mundo.</p>
+              <a href="https://www.unimelb.edu.au/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+            <div class="card-custom h-full card-hover-scale">
+                <img src="https://placehold.co/600x400/F2F2F2/333333?text=UCL" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=UCL+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="UCL Logo">
+                <div class="p-6">
+                    <h5 class="text-2xl font-semibold mb-2 text-blue-700">University College London (UCL)</h5>
+                    <p class="text-gray-600 mb-4">Ubicada en el corazón de Londres, UCL es una de las universidades multidisciplinares más grandes y prestigiosas del Reino Unido, reconocida globalmente por su investigación de vanguardia y su ambiente internacional.</p>
+                    <a href="https://www.ucl.ac.uk/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+            <div class="card-custom h-full card-hover-scale">
+                <img src="https://placehold.co/600x400/F2F2F2/333333?text=ETH+Zurich" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=ETH+Zurich+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="ETH Zurich Logo">
+                <div class="p-6">
+                    <h5 class="text-2xl font-semibold mb-2 text-blue-700">ETH Zurich</h5>
+                    <p class="text-gray-600 mb-4">El Instituto Federal Suizo de Tecnología en Zúrich es una de las principales universidades de ciencia y tecnología del mundo, con una reputación excepcional en campos como la ingeniería, la informática y las ciencias naturales.</p>
+                    <a href="https://ethz.ch/en.html" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+            <div class="card-custom h-full card-hover-scale">
+                <img src="https://placehold.co/600x400/F2F2F2/333333?text=NUS" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=NUS+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="NUS Logo">
+                <div class="p-6">
+                    <h5 class="text-2xl font-semibold mb-2 text-blue-700">National University of Singapore (NUS)</h5>
+                    <p class="text-gray-600 mb-4">Considerada una de las mejores universidades de Asia y el mundo, NUS ofrece un plan de estudios integral con un fuerte énfasis en la investigación y la innovación, atrayendo a estudiantes de todas partes.</p>
+                    <a href="https://www.nus.edu.sg/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+            <div class="card-custom h-full card-hover-scale">
+                <img src="https://placehold.co/600x400/F2F2F2/333333?text=U+Tokyo" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=U+Tokyo+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="University of Tokyo Logo">
+                <div class="p-6">
+                    <h5 class="text-2xl font-semibold mb-2 text-blue-700">University of Tokyo</h5>
+                    <p class="text-gray-600 mb-4">La universidad más prestigiosa de Japón y una de las principales del mundo, conocida por su excelencia en investigación en diversas disciplinas, desde ciencias y tecnología hasta humanidades y ciencias sociales.</p>
+                    <a href="https://www.u-tokyo.ac.jp/en/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 reveal-item">
+            <div class="card-custom h-full card-hover-scale">
+                <img src="https://placehold.co/600x400/F2F2F2/333333?text=Peking+University" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Peking+University+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="Peking University Logo">
+                <div class="p-6">
+                    <h5 class="text-2xl font-semibold mb-2 text-blue-700">Peking University</h5>
+                    <p class="text-gray-600 mb-4">Una de las universidades más antiguas y renombradas de China, destacada por su contribución a la educación, la investigación y la cultura. Ofrece una amplia gama de programas académicos y es un centro de pensamiento innovador.</p>
+                    <a href="http://english.pku.edu.cn/" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="perfil" class="py-16 md:py-24 bg-white reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-8 text-blue-800">Crea tu Perfil de Becario Internacional</h2>
+      <p class="text-center text-lg max-w-2xl mx-auto mb-10 text-gray-600">
+        Regístrate para recibir información personalizada sobre becas internacionales que se ajusten perfectamente a tus intereses y méritos académicos para estudiar en el extranjero.
+      </p>
+      <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2 p-6 bg-blue-50 rounded-xl shadow-lg reveal-item card-hover-scale">
+          <form id="perfilForm" class="space-y-6">
+            <div>
+              <label for="nombre" class="block text-gray-700 text-lg font-medium mb-2">Nombre Completo</label>
+              <input type="text" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="nombre" placeholder="Tu nombre completo" required>
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 text-lg font-medium mb-2">Correo Electrónico</label>
+              <input type="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="email" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div>
+              <label for="intereses" class="block text-gray-700 text-lg font-medium mb-2">Áreas de Interés</label>
+              <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" id="intereses" required>
+                <option value="">Selecciona tu interés</option>
+                <option value="academica">Académica</option>
+                <option value="deportiva">Deportiva</option>
+                <option value="investigacion">Investigación</option>
+                <option value="merito">Por Mérito / Liderazgo</option>
+                <option value="arte">Arte y Cultura</option>
+                <option value="ciencia">Ciencias Naturales</option>
+                <option value="ingenieria">Ingeniería y Tecnología</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-warning-custom w-full">Crear Mi Perfil</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="bg-blue-800 text-white py-16 md:py-24 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-8">¿Tienes Preguntas? Contáctanos</h2>
+      <p class="text-center text-lg max-w-2xl mx-auto mb-10 opacity-90">
+        Estamos aquí para ayudarte en tu camino hacia una beca internacional. Envíanos un mensaje y te responderemos lo antes posible.
+      </p>
+      <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2 p-6 bg-blue-700 rounded-xl shadow-lg reveal-item card-hover-scale">
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label for="contact-name" class="sr-only">Nombre completo</label>
+              <input type="text" class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-name" placeholder="Tu nombre completo" required>
+            </div>
+            <div>
+              <label for="contact-email" class="sr-only">Correo electrónico</label>
+              <input type="email" class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-email" placeholder="Tu correo electrónico" required>
+            </div>
+            <div>
+              <label for="contact-message" class="sr-only">Tu mensaje</label>
+              <textarea class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-message" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+            </div>
+            <button type="submit" class="btn-warning-custom w-full">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-blue-900 text-white text-center py-8">
+    <div class="container mx-auto px-4">
+      <p class="text-lg">&copy; 2025 Intellego Bilingual School - Profesor Denis Chajón</p>
+      <div class="flex justify-center space-x-6 mt-4">
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17-17 12 2.7 1 4.9 2 8 2s4.9-.7 7-2c-.3-1.4-.4-2.8-.2-4.2l1.6-1.6c-2.3.9-4.8 1.4-7.3 1.4-.6 0-1.2 0-1.8-.1-2.2-.4-4.2-1.7-5.5-3.6-1.5-2.2-2.3-5.2-1.8-8.2-.1-.7-.1-1.3-.1-2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3-.5 0-1.1.1-1.6.2-2.1.4-4 .9-5.6 1.7-.6.3-1.1.6-1.6.9-.5.4-.9.7-1.3 1.1-1.1.9-2.1 1.9-2.9 3.1-.7 1.1-1.3 2.3-1.6 3.6-.4 1.2-.5 2.5-.4 3.8-.1.7-.1 1.3-.1 2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    console.log("Script starting execution."); // Mensaje de diagnóstico
+
+    try {
+      // Inicializar iconos de Lucide (si se usan dinámicamente)
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOMContentLoaded disparado.");
+        if (typeof lucide !== 'undefined') {
+          try {
+            lucide.createIcons();
+            console.log("Iconos de Lucide creados exitosamente.");
+          } catch (e) {
+            console.error("Error al crear iconos de Lucide:", e);
+          }
+        } else {
+          console.warn("Librería Lucide no encontrada. Es posible que los iconos no se rendericen.");
+        }
+      });
+
+      // JavaScript para animaciones al hacer scroll (reveal-item)
+      const revealElements = document.querySelectorAll('.reveal-item');
+      if (revealElements.length > 0) { // Verificar si existen elementos antes de observar
+        const observerOptions = {
+          root: null, // Observa el viewport
+          rootMargin: '0px',
+          threshold: 0.1 // Cuando el 10% del elemento es visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target); // Dejar de observar una vez que es visible
+            }
+          });
+        }, observerOptions);
+
+        revealElements.forEach(el => {
+          observer.observe(el);
+        });
+        console.log("IntersectionObserver inicializado para elementos de revelación.");
+      } else {
+        console.log("No se encontraron elementos 'reveal-item' para observar.");
+      }
+
+      // Manejo de formularios (ejemplo simple)
+      const perfilForm = document.getElementById('perfilForm');
+      if (perfilForm) {
+        perfilForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const nombre = document.getElementById('nombre').value;
+          const email = document.getElementById('email').value;
+          const intereses = document.getElementById('intereses').value;
+
+          showCustomAlert(`¡Gracias, ${nombre}! Tu perfil se ha creado. Recibirás información sobre becas de tipo "${intereses}".`);
+          perfilForm.reset(); // Limpiar formulario
+          console.log("Formulario de perfil enviado.");
+        });
+      } else {
+        console.log("Formulario de perfil no encontrado.");
+      }
+
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const nombre = document.getElementById('contact-name').value;
+          showCustomAlert(`¡Mensaje de ${nombre} enviado! Nos pondremos en contacto pronto.`);
+          contactForm.reset(); // Limpiar formulario
+          console.log("Formulario de contacto enviado.");
+        });
+      } else {
+        console.log("Formulario de contacto no encontrado.");
+      }
+
+      // Función para mostrar un mensaje personalizado (reemplazo de alert())
+      function showCustomAlert(message) {
+        console.log("Mostrando alerta personalizada:", message);
+        const alertBox = document.createElement('div');
+        alertBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-700 text-white p-6 rounded-lg shadow-xl z-50 text-center max-w-sm';
+        alertBox.innerHTML = `
+          <p class="text-lg font-medium mb-4">${message}</p>
+          <button class="bg-yellow-500 text-blue-900 font-bold py-2 px-6 rounded-full hover:bg-yellow-400 transition-colors" onclick="this.parentNode.remove()">Entendido</button>
+        `;
+        document.body.appendChild(alertBox);
+
+        setTimeout(() => {
+          if (alertBox.parentNode) {
+            alertBox.parentNode.removeChild(alertBox);
+          }
+        }, 5000); // 5 segundos
+      }
+    } catch (e) {
+      console.error("Ocurrió un error inesperado en el bloque principal del script:", e);
+    }
+    console.log("Inicialización del script finalizada.");
+  </script>
 </body>
 </html>
