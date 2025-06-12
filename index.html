@@ -45,4 +45,327 @@
 
     @keyframes heroGradientShift {
       from { transform: translateX(-20%) translateY(-20%) scale(1.5) rotate(0deg); }
-      to { transform: translateX(20%) translateY(20%) scale(1.5) rot
+      to { transform: translateX(20%) translateY(20%) scale(1.5) rotate(5deg); }
+    }
+
+    /* Clases para animaciones al hacer scroll */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform; /* Optimización de rendimiento */
+    }
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Retraso para las tarjetas para un efecto escalonado */
+    .card-grid .reveal-item:nth-child(1) { transition-delay: 0s; }
+    .card-grid .reveal-item:nth-child(2) { transition-delay: 0.1s; }
+    .card-grid .reveal-item:nth-child(3) { transition-delay: 0.2s; }
+    .card-grid .reveal-item:nth-child(4) { transition-delay: 0.3s; }
+
+    /* Estilos para botones */
+    .btn-primary-custom {
+      @apply bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105;
+    }
+    .btn-warning-custom {
+      @apply bg-yellow-500 text-blue-900 font-bold py-3 px-8 rounded-full shadow-xl hover:bg-yellow-400 transition-all duration-300 ease-in-out transform hover:scale-105;
+    }
+    .btn-secondary-custom {
+      @apply bg-gray-200 text-gray-800 font-semibold py-2 px-5 rounded-md hover:bg-gray-300 transition-colors duration-300 ease-in-out;
+    }
+
+    /* Estilos para tarjetas */
+    .card-custom {
+      @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out;
+    }
+    .card-hover-scale:hover {
+      transform: scale(1.02);
+    }
+
+    /* Iconos (Lucide) - solo si los usas directamente en HTML */
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex flex-col lg:flex-row justify-between items-center">
+      <a class="text-2xl font-bold flex items-center mb-4 lg:mb-0" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon lucide lucide-graduation-cap mr-2"><path d="M21.43 20.3V5.71a1.28 1.28 0 0 0-.79-1.11l-9-4.29a1.28 1.28 0 0 0-1.12 0l-9 4.29A1.28 1.28 0 0 0 2.57 5.71v14.59a2 2 0 0 0 2 2h15.86a2 2 0 0 0 2-2Z"/><path d="m2.57 5.71 8.76 4.19a1.28 1.28 0 0 0 1.12 0l8.76-4.19"/><path d="m10.5 4.5 1.5 7.5 1.5-7.5"/></svg>
+        Intellego Becas
+      </a>
+      <div class="flex-grow flex justify-center lg:justify-end">
+        <ul class="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-8 text-lg font-medium">
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#inicio">Inicio</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#becas">Becas</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#universidades">Universidades</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#perfil">Crear Perfil</a></li>
+          <li><a class="hover:text-yellow-300 transition duration-300" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="bg-hero text-white text-center py-20 md:py-32 relative reveal-item" id="inicio">
+    <div class="container mx-auto px-4 z-10 relative">
+      <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-md">
+        ¡Tu Futuro Académico Empieza Aquí!
+      </h1>
+      <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-8 opacity-90">
+        Descubre las oportunidades de becas que el Colegio Intellego Bilingual School tiene para ti en las mejores universidades.
+      </p>
+      <a href="#becas" class="btn-warning-custom">Explorar Becas</a>
+    </div>
+  </header>
+
+  <!-- Sección Becas -->
+  <section id="becas" class="py-16 md:py-24 bg-gray-50 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Tipos de Becas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 card-grid">
+        <!-- Beca Académica -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text text-blue-600 mb-4"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h6z"/><path d="M10 12H7"/><path d="M13 16H7"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Académicas</h5>
+            <p class="text-gray-600">Para estudiantes con alto promedio y excelencia académica demostrada.</p>
+          </div>
+        </div>
+        <!-- Beca Deportiva -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell text-green-600 mb-4"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.69 11.31a2 2 0 1 0 2.83-2.83L19 6 6 19l1.41 1.41a2 2 0 1 0 2.83-2.83L11 16z"/><path d="m2.1 21.7 4.3-4.3"/><path d="m17.6 6.4 3.1-3.1"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Deportivas</h5>
+            <p class="text-gray-600">Para atletas con logros competitivos significativos a nivel regional o nacional.</p>
+          </div>
+        </div>
+        <!-- Beca por Mérito -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award text-purple-600 mb-4"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Por Mérito</h5>
+            <p class="text-gray-600">Reconoce el liderazgo, voluntariado o impacto social demostrado por el estudiante.</p>
+          </div>
+        </div>
+        <!-- Beca de Investigación -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full p-6 flex flex-col items-center text-center card-hover-scale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flask-conical text-red-600 mb-4"><path d="M10 2v7.31c0 .9.7 1.69 1.6 1.69h.8c.9 0 1.6-.79 1.6-1.69V2"/><path d="M14.4 9.35C20.3 11.13 22 13.05 22 15a7 7 0 1 1-14 0c0-1.95 1.7-3.87 7.6-5.65Z"/></svg>
+            <h5 class="text-2xl font-semibold mb-3 text-blue-700">Investigación</h5>
+            <p class="text-gray-600">Para estudiantes con proyectos científicos o técnicos en universidades extranjeras.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Universidades -->
+  <section id="universidades" class="bg-blue-50 py-16 md:py-24 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Universidades Aliadas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 card-grid">
+        <!-- UFM -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=UFM" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=UFM+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="UFM Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">Universidad Francisco Marroquín</h5>
+              <p class="text-gray-600 mb-4">Fundada en 1971, ofrece programas de vanguardia en Derecho, Medicina, Economía y más, con un enfoque en la libertad y la excelencia.</p>
+              <a href="https://www.ufm.edu" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+        <!-- UVG -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=UVG" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=UVG+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="UVG Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">Universidad del Valle de Guatemala</h5>
+              <p class="text-gray-600 mb-4">Destacada en ciencias, ingeniería y tecnología. Reconocida por su excelencia académica y su impacto en la investigación y el desarrollo.</p>
+              <a href="https://www.uvg.edu.gt" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+        <!-- URL -->
+        <div class="col-span-1 reveal-item">
+          <div class="card-custom h-full card-hover-scale">
+            <img src="https://placehold.co/600x400/F2F2F2/333333?text=URL" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=URL+Logo+No+Disponible';" class="w-full h-48 object-contain rounded-t-xl bg-white p-4" alt="URL Logo">
+            <div class="p-6">
+              <h5 class="text-2xl font-semibold mb-2 text-blue-700">Universidad Rafael Landívar</h5>
+              <p class="text-gray-600 mb-4">Con una sólida formación en humanidades y ciencias sociales, fomentando el pensamiento crítico y el compromiso con la sociedad.</p>
+              <a href="https://www.url.edu.gt" target="_blank" rel="noopener noreferrer" class="btn-primary-custom w-full text-center block">Visitar sitio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Crear Perfil -->
+  <section id="perfil" class="py-16 md:py-24 bg-white reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-8 text-blue-800">Crea tu Perfil de Becario</h2>
+      <p class="text-center text-lg max-w-2xl mx-auto mb-10 text-gray-600">
+        Regístrate para recibir información personalizada sobre becas que se ajusten perfectamente a tus intereses y méritos académicos.
+      </p>
+      <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2 p-6 bg-blue-50 rounded-xl shadow-lg reveal-item card-hover-scale">
+          <form id="perfilForm" class="space-y-6">
+            <div>
+              <label for="nombre" class="block text-gray-700 text-lg font-medium mb-2">Nombre Completo</label>
+              <input type="text" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="nombre" placeholder="Tu nombre completo" required>
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 text-lg font-medium mb-2">Correo Electrónico</label>
+              <input type="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="email" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div>
+              <label for="intereses" class="block text-gray-700 text-lg font-medium mb-2">Áreas de Interés</label>
+              <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" id="intereses" required>
+                <option value="">Selecciona tu interés</option>
+                <option value="academica">Académica</option>
+                <option value="deportiva">Deportiva</option>
+                <option value="investigacion">Investigación</option>
+                <option value="merito">Por Mérito</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-warning-custom w-full">Crear Mi Perfil</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="bg-blue-800 text-white py-16 md:py-24 reveal-item">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-8">¿Tienes Preguntas? Contáctanos</h2>
+      <p class="text-center text-lg max-w-2xl mx-auto mb-10 opacity-90">
+        Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.
+      </p>
+      <div class="flex justify-center">
+        <div class="w-full md:w-2/3 lg:w-1/2 p-6 bg-blue-700 rounded-xl shadow-lg reveal-item card-hover-scale">
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label for="contact-name" class="sr-only">Nombre completo</label>
+              <input type="text" class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-name" placeholder="Tu nombre completo" required>
+            </div>
+            <div>
+              <label for="contact-email" class="sr-only">Correo electrónico</label>
+              <input type="email" class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-email" placeholder="Tu correo electrónico" required>
+            </div>
+            <div>
+              <label for="contact-message" class="sr-only">Tu mensaje</label>
+              <textarea class="w-full p-3 border border-blue-500 rounded-md focus:ring-2 focus:ring-yellow-400 focus:focus:border-yellow-400 bg-blue-600 text-white placeholder-blue-200" id="contact-message" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+            </div>
+            <button type="submit" class="btn-warning-custom w-full">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white text-center py-8">
+    <div class="container mx-auto px-4">
+      <p class="text-lg">&copy; 2025 Intellego Bilingual School - Profesor Denis Chajón</p>
+      <div class="flex justify-center space-x-6 mt-4">
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="hover:text-yellow-300 transition-colors duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17-17 12 2.7 1 4.9 2 8 2s4.9-.7 7-2c-.3-1.4-.4-2.8-.2-4.2l1.6-1.6c-2.3.9-4.8 1.4-7.3 1.4-.6 0-1.2 0-1.8-.1-2.2-.4-4.2-1.7-5.5-3.6-1.5-2.2-2.3-5.2-1.8-8.2-.1-.7-.1-1.3-.1-2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3-.5 0-1.1.1-1.6.2-2.1.4-4 .9-5.6 1.7-.6.3-1.1.6-1.6.9-.5.4-.9.7-1.3 1.1-1.1.9-2.1 1.9-2.9 3.1-.7 1.1-1.3 2.3-1.6 3.6-.4 1.2-.5 2.5-.4 3.8-.1.7-.1 1.3-.1 2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3-.5 0-1.1.1-1.6.2-2.1.4-4 .9-5.6 1.7-.6.3-1.1.6-1.6.9-.5.4-.9.7-1.3 1.1-1.1.9-2.1 1.9-2.9 3.1-.7 1.1-1.3 2.3-1.6 3.6-.4 1.2-.5 2.5-.4 3.8 0 .7.1 1.3.1 2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3-.5 0-1.1.1-1.6.2-2.1.4-4 .9-5.6 1.7-.6.3-1.1.6-1.6.9-.5.4-.9.7-1.3 1.1-1.1.9-2.1 1.9-2.9 3.1-.7 1.1-1.3 2.3-1.6 3.6-.4 1.2-.5 2.5-.4 3.8-.1.7-.1 1.3-.1 2 1.3 0 2.6-.4 3.7-1 0 0 0 0 0 0 .5-1.4 1.2-2.7 2-3.8l.6-.8c-.7-.4-1.5-.7-2.3-.9-1.3-.3-2.6-.4-3.9-.3z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Inicializar iconos de Lucide (si se usan dinámicamente)
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+
+    // JavaScript para animaciones al hacer scroll (reveal-item)
+    const revealElements = document.querySelectorAll('.reveal-item');
+
+    const observerOptions = {
+      root: null, // Observa el viewport
+      rootMargin: '0px',
+      threshold: 0.1 // Cuando el 10% del elemento es visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // Dejar de observar una vez que es visible
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach(el => {
+      observer.observe(el);
+    });
+
+    // Manejo de formularios (ejemplo simple)
+    const perfilForm = document.getElementById('perfilForm');
+    if (perfilForm) {
+      perfilForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const intereses = document.getElementById('intereses').value;
+
+        // Aquí podrías enviar estos datos a un backend, Firebase, etc.
+        // Por ahora, solo mostramos un mensaje de éxito.
+        showCustomAlert(`¡Gracias, ${nombre}! Tu perfil se ha creado. Recibirás información sobre becas de tipo "${intereses}".`);
+        perfilForm.reset(); // Limpiar formulario
+      });
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const nombre = document.getElementById('contact-name').value;
+        // Aquí podrías enviar el mensaje.
+        showCustomAlert(`¡Mensaje de ${nombre} enviado! Nos pondremos en contacto pronto.`);
+        contactForm.reset(); // Limpiar formulario
+      });
+    }
+
+    // Función para mostrar un mensaje personalizado (reemplazo de alert())
+    function showCustomAlert(message) {
+      // Crea un div para el mensaje
+      const alertBox = document.createElement('div');
+      alertBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-700 text-white p-6 rounded-lg shadow-xl z-50 text-center max-w-sm';
+      alertBox.innerHTML = `
+        <p class="text-lg font-medium mb-4">${message}</p>
+        <button class="bg-yellow-500 text-blue-900 font-bold py-2 px-6 rounded-full hover:bg-yellow-400 transition-colors" onclick="this.parentNode.remove()">Entendido</button>
+      `;
+      document.body.appendChild(alertBox);
+
+      // Eliminar después de un tiempo (opcional)
+      setTimeout(() => {
+        if (alertBox.parentNode) {
+          alertBox.parentNode.removeChild(alertBox);
+        }
+      }, 5000); // 5 segundos
+    }
+  </script>
+</body>
+</html>
