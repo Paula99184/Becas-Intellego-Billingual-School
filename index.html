@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Becas Internacionales – Intellego</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter para el cuerpo, y para un título diferente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN (para iconos modernos) -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.320.0"></script>
+  
+  <style>
+    /* Configuración de Tailwind para incluir fuentes */
+    :root {
+      --font-inter: 'Inter', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+    }
+    body {
+      font-family: var(--font-inter);
+      background-color: #f8faff; /* Un fondo muy claro */
+    }
+
+    /* Estilos personalizados para el Hero Section */
+    .bg-hero {
+      background: linear-gradient(135deg, #2e4c85 0%, #1a3a60 100%); /* Degradado de azul profundo */
+      position: relative;
+      overflow: hidden;
+    }
+    /* Pseudo-elemento para el degradado animado de fondo */
+    .bg-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      animation: heroGradientShift 15s ease-in-out infinite alternate;
+      transform: scale(1.5);
+    }
+
+    @keyframes heroGradientShift {
+      from { transform: translateX(-20%) translateY(-20%) scale(1.5) rotate(0deg); }
+      to { transform: translateX(20%) translateY(20%) scale(1.5) rot
